@@ -35,7 +35,7 @@ function [ px, py ] = MOACO( cant_nodos, max)
    end
    alfa  = 0.8 %influencia de las feromonas 
    beta  = 0.5 %influencia de la distancia
-   gamma = 0.5 %influencia del tiempo
+   kappa = 0.5 %influencia del tiempo
    
    %Ciclo de optimizacion
    for i=1:max %ciclo hasta el maximo de iteraciones específicadas
@@ -46,7 +46,23 @@ function [ px, py ] = MOACO( cant_nodos, max)
                prob_visita(i,j) = 0;
            end
        end
+       %inicializar totales de solucion de iteracion para calculos posteriores
+       total_tiempos = 0;
+       total_distancias = 0;
        
+       %elegir al azar un nodo origen
+       i_ini = randi([1, cant_nodos]);
+       j_ini = randi([1, cant_nodos]);
        
+       visitado(i_ini,j_ini) = 1; %marcar como visitado nodo origen
+       
+       %hallar ruta para iteracion
+       for k=1: cant_nodos
+          %calculo de la probabilidad de cambio de estado de una hormiga
+          pk_ij = 0;
+          for l=1: cant_nodos
+              
+          end
+       end
    end
 end

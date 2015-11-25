@@ -1,0 +1,10 @@
+{
+  "name": "Colonia de Hormigas",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dbaines48/opti_MOACO",
+  "authors": [
+    "Daniel Blanco <danielblancob48@gmail.com>"
+  ],
+  "description": "ACO para Optimizacion Proyecto Final",
+  "license": "MIT"
+}

@@ -52,6 +52,11 @@ function [ px, py ] = MOACO( cant_nodos, max)
        
        %elegir al azar un nodo origen
        i_ini = randi([1, cant_nodos]);
-       j_ini = randi([1, cant_nodos])
+       j_ini = randi([1, cant_nodos]);
+       
+       visitado(i_ini,j_ini) = 1; %marcar como visitado nodo origen
+       
+       %hallar ruta para iteracion
+       sumpt = probabilidad_total(i_ini, j_ini, cant_nodos, frm, MD, MT, alfa, beta, kappa);
    end
 end
