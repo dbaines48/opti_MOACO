@@ -1,0 +1,9 @@
+function [ frm ] = actualizar_feromonas(frm, n)
+%ACTUALIZAR FEROMONAS Funcion para actualizar las feromonas
+%   En base a un factor de evaporación se actualizan los nive
+    for i=1:n
+        for j=1:n
+            
+        end
+    end
+

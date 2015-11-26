@@ -1,6 +1,5 @@
 %Algoritmo de Colonia de Hormigas Multi-Objetivo
-function MOACO(cant_nodos)
-%function [ px, py ] = MOACO( cant_nodos)
+function [ paretoD, paretoT ] = MOACO(cant_nodos)
    n = num2str(cant_nodos);
    ds = strcat(n,'x',n,'distances.csv');
    ts = strcat(n,'x',n,'times.csv');
@@ -20,7 +19,7 @@ function MOACO(cant_nodos)
    
    %Generar grafo en funcion de las distancias y los tiempos
    %Se asume que todos los nodos están conectados entre si.
-   mx = 50;
+   mx = 100;
    MD = csvread(ds);
    MT = csvread(ts);
    
@@ -38,7 +37,8 @@ function MOACO(cant_nodos)
    paretoD = []; %inicializar frente de pareto para distancias
    paretoT = []; %inicializar frente de pareto para tiempos
    
-   for i=1:mx %ciclo hasta el maximo de iteraciones específicadas
+   [f s] = size(paretoD);
+   while s < mx %ciclo hasta el maximo de soluciones esperadas
        
        %marcar todos los nodos como no visitados y reiniciar las probabilidades de visita a 0
        for k=1:cant_nodos
@@ -53,7 +53,7 @@ function MOACO(cant_nodos)
        ruta_iter = [];
        for c=1:cant_nodos-1 %hacer una ruta de n nodos
            visitado(nodo_origen_iteracion) = 1; %marcar como visitado el nodo
-           ruta_iter = [ruta_iter nodo_origen_iteracion];
+           %ruta_iter = [ruta_iter nodo_origen_iteracion];
            prob_total = probabilidad_total(cant_nodos,nodo_origen_iteracion,MD,MT,frm,visitado,alfa,beta,kappa); 
           
           lprs = [];
@@ -69,20 +69,18 @@ function MOACO(cant_nodos)
           end
           [bp bi] = max(lprs); %escoger la mejor probabilidad
           nnodo = lpns(bi);
+          frm(nodo_origen_iteracion, nnodo) = frm(nodo_origen_iteracion, nnodo) + pf/2; %aumentar rastro de feromona al pasar hormiga.
           
           total_tiempos = total_tiempos + MT(nodo_origen_iteracion, nnodo);
           total_distancias = total_distancias + MD(nodo_origen_iteracion, nnodo);
           
-          %verificar_frente_pareto(paretoD, paretoT, total_distancias, total_tiempos);
-          %actualizar_feromonas(frm);
-          
           nodo_origen_iteracion = nnodo;
        end
+       ruta_iter = [ruta_iter nnodo];
+       %[paretoD, paretoT] = verificar_frente_pareto(paretoD, paretoT, total_distancias, total_tiempos);
        paretoD = [paretoD total_distancias];
        paretoT = [paretoT total_tiempos];
-       plot(paretoD, paretoT,'x');
-       grid on;
-   end   
-   paretoD
-   paretoT
+       frm = actualizar_feromonas(frm, cant_nodos);
+       [f s] = size(paretoD);
+   end 
 end
