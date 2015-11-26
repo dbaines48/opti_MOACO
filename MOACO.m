@@ -30,8 +30,8 @@ function [ paretoD, paretoT ] = MOACO(cant_nodos)
        end
    end
    alfa  = 0.9; %influencia de las feromonas 
-   beta  = 0.4; %influencia de la distancia
-   kappa = 0.4; %influencia del tiempo
+   beta  = 0.5; %influencia de la distancia
+   kappa = 0.5; %influencia del tiempo
    
    %Ciclo de optimizacion
    paretoD = []; %inicializar frente de pareto para distancias
@@ -77,10 +77,15 @@ function [ paretoD, paretoT ] = MOACO(cant_nodos)
           nodo_origen_iteracion = nnodo;
        end
        ruta_iter = [ruta_iter nnodo];
-       %[paretoD, paretoT] = verificar_frente_pareto(paretoD, paretoT, total_distancias, total_tiempos);
        paretoD = [paretoD total_distancias];
        paretoT = [paretoT total_tiempos];
+       %[pareD, pareT] = actualizar_frente_pareto(paretoD, paretoT, total_distancias, total_tiempos);
+       %paretoD = pareD;
+       %paretoT = pareT;
+       %paretoD
        frm = actualizar_feromonas(frm, cant_nodos);
-       [f s] = size(paretoD);
+       [f, s] = size(paretoD);
    end 
+   paretoD
+   paretoT
 end

@@ -1,29 +1,40 @@
-function [ parD, parT ] = actualizar_frente_pareto( parD, parT, sD, sT)
-    rD = [];
-    rT = [];
-    sw = 0; %verifica si ya se ha establecido que deba incluirse la solución
-    can_get_in = 1; %verifica que la solución pueda ser incluida
+function [ pD, pT ] = actualizar_frente_pareto( parD, parT, sD, sT)
     
-    if numel(parD) == 0     %si no hay nada en el frente de pareto
-        rD = [rD sD];
-        rT = [rT sT];
-    else                    % si si hay algo
-        for i=1:numel(parD)
-            if sD < parD(i) && sT < parT(i) % si la solucion es mejor en todo sentido
-                sw = 1;
+    hay_algo_abajo = 0;
+    
+    if numel(parD) == 0
+        parD = [parD sD];
+        parT = [parT sT];
+    else
+        %buscar si hay soluciones en el cuadrante inferior izquierdo
+        i = 1;
+        while (i <= numel(parD) && hay_algo_abajo == 0)
+            if parD(i) <= sD && parT(i) <= sT
+                  hay_algo_abajo = 1; 
             else
-                if sD > parD(i) && sT > parT(i) % si la solucion es peor en todo sentido
-                   can_get_in = 0;
-                   rD = [rD parD(i)];
-                   rT = [rT parT(i)];
-                else
-                    
-                end
+                i = i+1;
             end
         end
+        if hay_algo_abajo == 1 %si hay algo abajo
+           %no hacer nada
+        else                   %si no hay nada abajo
+            %quitar lo que esté en el cuadrante superior derecho
+            rD = [];
+            rT = [];
+            for k=1:numel(parD)
+               if(parD(k) >= sD && parT(k) >= sT)
+                   %no agregar
+               else
+                   rD = [rD parD(k)];
+                   rT = [rT parT(k)];
+               end
+            end
+            %añadir la solucion ultima hallada
+            parD = [rD sD];
+            parT = [rT sT];
+        end
     end
-    
-    parD = rD;
-    parT = rT;    
+    pD = parD;
+    pT = parT;
 end
 
