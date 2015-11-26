@@ -6,5 +6,3 @@ while(nodos ~= 20 && nodos~=40 && nodos~=60 && nodos~=80 && nodos~=100)
 end
 %[paretoX, paretoY] = MOACO(nodos);
 [pD, pY] = MOACO(nodos);
-plot(pD, pY,'x');
-grid on;

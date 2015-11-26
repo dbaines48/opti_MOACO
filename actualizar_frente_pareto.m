@@ -9,7 +9,7 @@ function [ pD, pT ] = actualizar_frente_pareto( parD, parT, sD, sT)
         %buscar si hay soluciones en el cuadrante inferior izquierdo
         i = 1;
         while (i <= numel(parD) && hay_algo_abajo == 0)
-            if parD(i) <= sD && parT(i) <= sT
+            if parD(i) < sD && parT(i) < sT
                   hay_algo_abajo = 1; 
             else
                 i = i+1;
@@ -22,7 +22,7 @@ function [ pD, pT ] = actualizar_frente_pareto( parD, parT, sD, sT)
             rD = [];
             rT = [];
             for k=1:numel(parD)
-               if(parD(k) >= sD && parT(k) >= sT)
+               if(parD(k) > sD && parT(k) > sT)
                    %no agregar
                else
                    rD = [rD parD(k)];
