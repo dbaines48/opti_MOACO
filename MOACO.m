@@ -31,7 +31,7 @@ function [ paretoD, paretoT ] = MOACO(cant_nodos)
    end
    alfa  = 0.2; %influencia de las feromonas 
    beta  = 0.5; %influencia de la distancia
-   kappa = 0.5
+   kappa = 0.5;
    
    ; %influencia del tiempo
    
