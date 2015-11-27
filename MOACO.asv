@@ -20,7 +20,7 @@ function [ paretoD, paretoT, time ] = MOACO(cant_nodos)
    
    %Generar grafo en funcion de las distancias y los tiempos
    %Se asume que todos los nodos están conectados entre si.
-   mx = 7;
+   mx = 10;
    MD = csvread(ds);
    MT = csvread(ts);
    
@@ -68,9 +68,9 @@ function [ paretoD, paretoT, time ] = MOACO(cant_nodos)
                   lpns = [lpns k];
               end
           end
-          %[bp bi] = max(lprs); %escoger la mejor probabilidad
+          [bp bi] = max(lprs); %escoger la mejor probabilidad
           %escoger prob aleatoria
-          bi = randi([1 numel(lpns)]);
+          ind = randi([1 numel(lpns)]);
           nnodo = lpns(bi);
           frm(nodo_origen_iteracion, nnodo) = frm(nodo_origen_iteracion, nnodo) + pf/2; %aumentar rastro de feromona al pasar hormiga.
           
